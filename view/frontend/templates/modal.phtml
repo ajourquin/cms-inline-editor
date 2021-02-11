@@ -1,0 +1,39 @@
+<?php
+/**
+ * @author    Aurelien Jourquin <aurelien@growzup.com>
+ * @link      http://www.ajourquin.com
+ */
+
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Ajourquin\CmsInlineEditor\ViewModel\Modal $viewModel */
+$viewModel = $block->getViewModel();
+?>
+<link rel="stylesheet" property="stylesheet" href="<?= $block->getViewFileUrl('Ajourquin_CmsInlineEditor::css/editor.css') ?>">
+<link rel="stylesheet" property="stylesheet" href="<?= $block->getViewFileUrl('jquery/jstree/themes/default/style.css') ?>">
+<link rel="stylesheet" property="stylesheet" href="<?= $block->getViewFileUrl('tiny_mce_4/skins/magento/skin.min.css') ?>">
+
+<div id="cie-modal">
+    <h2 id="cie-block-identifier">Block identifier: <span></span></h2>
+    <textarea id="cie-textarea" name="cie-textarea"></textarea>
+    <input id="cie-block-id" type="hidden" value="" />
+</div>
+<div id="cie-result-modal" data-title=""></div>
+
+<script>
+    var FORM_KEY = "<?= $viewModel->getFormKey(); ?>";
+
+    require([
+        'jquery',
+        'cmsInlineEditor',
+        'mage/adminhtml/events',
+        'mage/adminhtml/wysiwyg/tiny_mce/setup',
+        'Magento_Variable/variables'
+    ], function($, cmsInlineEditor){
+        const editor = cmsInlineEditor();
+        editor.createEditorModal();
+        editor.setPostUrl('<?= $viewModel->getPostUrl(); ?>');
+
+        const wysiwyg = new wysiwygSetup('cie-textarea', <?= $viewModel->getWysiwygConfig(); ?>);
+        wysiwyg.setup('exact');
+    });
+</script>

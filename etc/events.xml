@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author    Aurélien Jourquin <aurelien@growzup.com>
+ * @link      https://www.growzup.com
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="backend_auth_user_login_success">
+        <observer name="cie_backend_auth_user_login_success" instance="Ajourquin\CmsInlineEditor\Observer\BackendAuthUserLoginSuccess" />
+    </event>
+</config>

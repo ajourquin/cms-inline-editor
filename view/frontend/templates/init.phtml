@@ -1,0 +1,39 @@
+<?php
+/**
+ * @author    Aurelien Jourquin <aurelien@growzup.com>
+ * @link      http://www.ajourquin.com
+ */
+
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Ajourquin\CmsInlineEditor\ViewModel\Modal $viewModel */
+$viewModel = $block->getViewModel();
+?>
+
+<?php if ($viewModel->isEnabled()): ?>
+<div id="cie-wrapper"></div>
+
+<script>
+    require([
+        'jquery'
+    ], function($) {
+        $.get({
+            url: '<?= $viewModel->getInitUrl(); ?>',
+            cache: false
+        }).success(function (response) {
+            if (response.isAllowed === true) {
+                $('.cie-box').each(function () {
+                   $(this).attr(
+                       'data-mage-init',
+                       '{"cmsInlineEditor": {"url": "<?= $viewModel->getViewUrl() ?>id/' + $(this).data('cie-block') + '"}}');
+                   $(this).trigger('contentUpdated');
+                });
+                $('#cie-wrapper').html(response.content);
+            }
+        }).fail(function (response) {
+
+        }).complete(function (response) {
+            // console.log(response);
+        });
+    });
+</script>
+<?php endif; ?>

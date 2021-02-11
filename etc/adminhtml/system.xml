@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author    Aurelien Jourquin <aurelien@growzup.com>
+ * @link      http://www.ajourquin.com
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="ajourquin" translate="label" sortOrder="1001">
+            <label>Ajourquin</label>
+        </tab>
+        <section id="cmsinlineeditor" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>CMS Inline Editor</label>
+            <tab>ajourquin</tab>
+            <resource>Ajourquin_CMSInlineEditor::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enable_restriction" translate="label" type="select" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable IP Restriction</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Restrict usage of CMS Inline Editor by IP.</comment>
+                </field>
+                <field id="allowed_ips" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Allowed IPs</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <comment>Comma separated.</comment>
+                    <depends>
+                        <field id="enable_restriction">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="wysiwyg_options" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>WYSIWYG Options</label>
+                <field id="widgets_enabled" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable Widgets</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="variables_enabled" translate="label" type="select" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable Variables</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,77 @@
+@font-face {
+    font-family: 'Admin Icons';
+    src: url('/static/adminhtml/Magento/backend/en_US/fonts/admin-icons/admin-icons.woff2') format('woff2'), url('static/adminhtml/Magento/backend/en_US/fonts/admin-icons/admin-icons.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: auto;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('/static/adminhtml/Magento/backend/en_US/fonts/opensans/regular/opensans-400.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: auto;
+}
+
+.cie-box {
+    border:1px dashed #aaaabb;
+    cursor: context-menu;
+    position: relative;;
+
+    &:after {
+        font-family: 'Admin Icons';
+        content: '\e631';
+        position: absolute;
+        top: 0;
+        right: 5px;
+    }
+}
+
+.modals-overlay {
+    z-index: 899;
+}
+.modal-slide,
+.modal-popup {
+    bottom: 0;
+    left: 0;
+    min-width: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: visibility 0s .3s, opacity .3s ease;
+    transition: visibility 0s .3s, opacity .3s ease;
+}
+.modal-slide._show,
+.modal-popup._show {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: opacity .3s ease;
+    transition: opacity .3s ease;
+}
+.modal-slide._show .modal-inner-wrap,
+.modal-popup._show .modal-inner-wrap {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+}
+/************/
+/* Messages */
+/************/
+.modals-wrapper {
+    * {
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    @import (less) url(/static/adminhtml/Magento/backend/en_US/css/styles.css);
+
+    .admin__fieldset > .admin__field > .admin__field-label {
+        width: ~"calc( (100%) * 0.25 - 30px )";
+    }
+
+    .admin__control-select,
+    .ui-datepicker .ui-datepicker-title select {
+        background-position: ~"calc(100% - 12px) -34px, 100%", ~"calc(100% - 3.2rem) 0";
+    }
+}

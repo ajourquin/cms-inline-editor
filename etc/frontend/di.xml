@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author    Aurélien Jourquin <aurelien@growzup.com>
+ * @link      https://www.growzup.com
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Cms\Block\Block">
+        <plugin name="ajourquin_cms_inline_editor_block_after_tohtml" type="Ajourquin\CmsInlineEditor\Plugin\Cms\Block\Block" sortOrder="10" />
+    </type>
+
+    <type name="Magento\Variable\Model\Source\Variables">
+        <plugin name="ajourquin_cms_inline_editor_scope" type="Ajourquin\CmsInlineEditor\Plugin\Variable\Model\Source\Variables" sortOrder="10" />
+    </type>
+
+    <type name="Magento\Cms\Model\Wysiwyg\CompositeConfigProvider">
+        <arguments>
+            <argument name="variablePluginConfigProvider" xsi:type="array">
+                <item name="default" xsi:type="string">Magento\Variable\Model\Variable\ConfigProvider</item>
+            </argument>
+            <argument name="widgetPluginConfigProvider" xsi:type="array">
+                <item name="default" xsi:type="string">Magento\Widget\Model\Widget\Config</item>
+            </argument>
+            <argument name="wysiwygConfigPostProcessor" xsi:type="array">
+                <item name="default" xsi:type="string">Ajourquin\CmsInlineEditor\Model\Wysiwyg\DefaultConfigProvider</item>
+            </argument>
+            <argument name="galleryConfigProvider" xsi:type="array">
+                <item name="default" xsi:type="string">Magento\Cms\Model\Wysiwyg\Gallery\DefaultConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Cms\Model\Config\Source\Wysiwyg\Editor">
+        <arguments>
+            <argument name="adapterOptions" xsi:type="array">
+                <item name="tinymce4" xsi:type="array">
+                    <item name="value" xsi:type="string">mage/adminhtml/wysiwyg/tiny_mce/tinymce4Adapter</item>
+                    <item name="label" xsi:type="string" translatable="true">TinyMCE 4</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Cms\Model\Wysiwyg\Gallery\DefaultConfigProvider">
+        <arguments>
+            <argument name="currentTreePath" xsi:type="const">Magento\Cms\Model\Wysiwyg\Config::IMAGE_DIRECTORY</argument>
+            <argument name="windowSize" xsi:type="array">
+                <item name="height" xsi:type="number">600</item>
+                <item name="width" xsi:type="number">1000</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Ajourquin\CmsInlineEditor\Model\Wysiwyg\Config">
+        <arguments>
+            <argument name="windowSize" xsi:type="array">
+                <item name="height" xsi:type="number">600</item>
+                <item name="width" xsi:type="number">1000</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

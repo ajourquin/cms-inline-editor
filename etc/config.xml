@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author    Aurelien Jourquin <aurelien@growzup.com>
+ * @link      http://www.ajourquin.com
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <cmsinlineeditor>
+            <general>
+                <enabled>0</enabled>
+                <enable_restriction>0</enable_restriction>
+                <allowed_ips backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+            </general>
+            <wysiwyg_options>
+                <widgets_enabled>1</widgets_enabled>
+                <variables_enabled>1</variables_enabled>
+            </wysiwyg_options>
+        </cmsinlineeditor>
+    </default>
+</config>
