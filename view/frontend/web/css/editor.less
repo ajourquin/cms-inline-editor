@@ -1,23 +1,7 @@
-@font-face {
-    font-family: 'Admin Icons';
-    src: url('/static/adminhtml/Magento/backend/en_US/fonts/admin-icons/admin-icons.woff2') format('woff2'), url('static/adminhtml/Magento/backend/en_US/fonts/admin-icons/admin-icons.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: auto;
-}
-
-@font-face {
-    font-family: 'Open Sans';
-    src: url('/static/adminhtml/Magento/backend/en_US/fonts/opensans/regular/opensans-400.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: auto;
-}
-
 .cie-box {
     border:1px dashed #aaaabb;
     cursor: context-menu;
-    position: relative;;
+    position: relative;
 
     &:after {
         font-family: 'Admin Icons';
@@ -60,11 +44,7 @@
 /* Messages */
 /************/
 .modals-wrapper {
-    * {
-        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    }
-
-    @import (less) url(/static/adminhtml/Magento/backend/en_US/css/styles.css);
+    @import (less) url('admin.css');
 
     .admin__fieldset > .admin__field > .admin__field-label {
         width: ~"calc( (100%) * 0.25 - 30px )";

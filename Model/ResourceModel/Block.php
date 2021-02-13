@@ -55,7 +55,7 @@ class Block
         $linkField = $entityMetadata->getLinkField();
 
         $select = $connection->select()
-                    ->from($this->resourceBlock->getMainTable(), [$linkField])
+                    ->from($this->resourceBlock->getMainTable(), ['block_id'])
                     ->join(
                         ['cbs' => $this->resourceBlock->getTable('cms_block_store')],
                         $this->resourceBlock->getMainTable() . '.' . $linkField . ' = cbs.' . $linkField,
