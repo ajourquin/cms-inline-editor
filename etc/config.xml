@@ -10,8 +10,6 @@
         <cmsinlineeditor>
             <general>
                 <enabled>0</enabled>
-                <enable_restriction>0</enable_restriction>
-                <allowed_ips backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
             </general>
             <wysiwyg_options>
                 <widgets_enabled>1</widgets_enabled>

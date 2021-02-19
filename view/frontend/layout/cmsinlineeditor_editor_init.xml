@@ -7,7 +7,7 @@
 -->
 <layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
     <container name="root">
-        <block class="Magento\Framework\View\Element\Template" name="aj_cmsinlineeditor_edit" template="Ajourquin_CmsInlineEditor::modal.phtml">
+        <block ifconfig="cmsinlineeditor/general/enabled" class="Magento\Framework\View\Element\Template" name="aj_cmsinlineeditor_edit" template="Ajourquin_CmsInlineEditor::modal.phtml">
             <arguments>
                 <argument name="view_model" xsi:type="object">Ajourquin\CmsInlineEditor\ViewModel\Modal</argument>
             </arguments>

@@ -40,7 +40,8 @@ define([
                     url: config.url,
                 }).success(function (response) {
                     tinymce.get('cie-textarea').setContent(response.content);
-                    $('#cie-block-id').val(response.id);
+                    $('#cie-cms-id').val(response.id);
+                    $('#cie-cms-type').val(response.type);
                     $('#cie-block-identifier span').html(response.identifier);
                 }).fail(function (response) {
                     console.log('failed' + response);
@@ -53,16 +54,18 @@ define([
          */
         save: function (cieModal) {
             var self = this;
-            const $blockId = $('#cie-block-id').val();
+            const $cmsId = $('#cie-cms-id').val();
+            const $cmsType = $('#cie-cms-type').val();
 
             $.post({
                 url: self.postUrl,
                 data: {
                     content: JSON.stringify(tinymce.get('cie-textarea').getContent()),
-                    id: $blockId
+                    id: $cmsId,
+                    type: $cmsType
                 }
             }).success(function (response) {
-                $('#cie-block-' + $blockId).html(response['content']);
+                $('#cie-cms-' + $cmsId).html(response['content']);
                 self.setResultModalContent('Success', 'Content has been saved.');
             }).fail(function (response) {
                 self.setResultModalContent('Error', 'An error occurred while saving block. Please try again.');
@@ -85,9 +88,9 @@ define([
          * @param cieModal
          */
         preview: function (cieModal) {
-            const $blockId = $('#cie-block-id').val();
+            const $cmsId = $('#cie-cms-id').val();
 
-            $('#cie-block-' + $blockId).html(tinymce.get('cie-textarea').getContent());
+            $('#cie-cms-' + $cmsId).html(tinymce.get('cie-textarea').getContent());
             cieModal.closeModal();
         },
 

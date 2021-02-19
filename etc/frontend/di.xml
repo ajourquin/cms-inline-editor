@@ -10,6 +10,10 @@
         <plugin name="ajourquin_cms_inline_editor_block_after_tohtml" type="Ajourquin\CmsInlineEditor\Plugin\Cms\Block\Block" sortOrder="10" />
     </type>
 
+    <type name="Magento\Cms\Block\Page">
+        <plugin name="ajourquin_cms_inline_editor_page_after_tohtml" type="Ajourquin\CmsInlineEditor\Plugin\Cms\Block\Page" sortOrder="10" />
+    </type>
+
     <type name="Magento\Variable\Model\Source\Variables">
         <plugin name="ajourquin_cms_inline_editor_scope" type="Ajourquin\CmsInlineEditor\Plugin\Variable\Model\Source\Variables" sortOrder="10" />
     </type>

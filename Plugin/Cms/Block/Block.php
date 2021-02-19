@@ -47,8 +47,9 @@ class Block
             $blockId = $this->getBlockId($subject->getData('block_id'));
 
             if ($blockId !== null) {
-                $result = '<div id="cie-block-' . $blockId . '" class="cie-box"
-                    data-trigger="cie-trigger" data-cie-block="' . $blockId . '">'
+                $result = '<div id="cie-cms-' . $blockId . '" class="cie-box"
+                    data-trigger="cie-trigger" data-cie-cms="' . $blockId . '"
+                    data-cie-type="block">'
                     . $result
                     . '</div>';
             }

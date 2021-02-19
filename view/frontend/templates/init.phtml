@@ -9,7 +9,6 @@
 $viewModel = $block->getViewModel();
 ?>
 
-<?php if ($viewModel->isEnabled()): ?>
 <div id="cie-wrapper"></div>
 
 <script>
@@ -24,7 +23,7 @@ $viewModel = $block->getViewModel();
                 $('.cie-box').each(function () {
                    $(this).attr(
                        'data-mage-init',
-                       '{"cmsInlineEditor": {"url": "<?= $viewModel->getViewUrl() ?>id/' + $(this).data('cie-block') + '"}}');
+                       '{"cmsInlineEditor": {"url": "<?= $viewModel->getViewUrl() ?>id/' + $(this).data('cie-cms') + '/type/' + $(this).data('cie-type') + '"}}');
                    $(this).trigger('contentUpdated');
                 });
                 $('#cie-wrapper').html(response.content);
@@ -36,4 +35,3 @@ $viewModel = $block->getViewModel();
         });
     });
 </script>
-<?php endif; ?>

@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace Ajourquin\CmsInlineEditor\Controller\Block;
+namespace Ajourquin\CmsInlineEditor\Controller\Editor;
 
 use Ajourquin\CmsInlineEditor\Model\Editor;
 use Magento\Framework\App\Action\Action;
@@ -15,13 +15,13 @@ use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
 
-class Init extends Action
+class Post extends Action
 {
     /** @var Editor */
     private $editor;
 
     /**
-     * Init constructor.
+     * Post constructor.
      * @param Context $context
      * @param Editor $editor
      */
@@ -36,23 +36,31 @@ class Init extends Action
 
     /**
      * @return ResultInterface
+     * @throws \Exception
      */
     public function execute(): ResultInterface
     {
         $resultJson = $this->resultFactory->create(ResultFactory::TYPE_JSON);
 
-        if ($this->getRequest()->isAjax()) {
-            $data = [];
-            $data['isAllowed'] = false;
-            $canEdit = $this->editor->canEdit();
+        if ($this->getRequest()->isAjax() && $this->editor->canEdit()) {
+            $params = $this->getRequest()->getParams();
+            $cmsType = $params['type'];
+            $repository = $this->editor->getContextRepository($cmsType);
+            $content = $this->editor->filter($cmsType, $params['content']);
 
-            if ($canEdit) {
-                $data['isAllowed'] = true;
-                $resultLayout = $this->resultFactory->create(ResultFactory::TYPE_LAYOUT);
-                $data['content'] = $resultLayout->getLayout()->getOutput();
-            }
+            $result = [
+                'success' => true,
+                'id' => (int) $params['id'],
+                'content' => $content
+            ];
 
-            $resultJson->setData($data);
+            $entity = $repository->getById($params['id']);
+            $entity->setContent($content);
+            $repository->save($entity);
+
+            $resultJson->setData($result);
+        } else {
+            $resultJson->setHttpResponseCode(400);
         }
 
         return $resultJson;
