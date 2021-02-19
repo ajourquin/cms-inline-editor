@@ -22,30 +22,47 @@ define([
                 class: 'action-primary'
             }]
         },
+        loadingContent: $t('Loading data. Please wait...'),
+        successTitle: $t('Success'),
+        successContent: $t('Content has been saved.'),
+        errorTitle: $t('Error'),
+        errorContent: $t('An error occurred while saving block. Please try again.'),
+
 
         /**
          * @param config
          * @param element
          */
         initialize: function (config, element) {
-            var self = this;
+            const self = this;
             this._super();
+            const $h2 = $('#cie-block-identifier span');
+            const $cmsId = $('#cie-cms-id');
+            const $cmsType = $('#cie-cms-type');
 
             $(element).click(function () {
-                $.ajax({
-                    beforeSend: function () {
-                        $('#cie-block-identifier span').html($t('Loading data. Please wait...'));
-                        tinymce.get('cie-textarea').setContent($t('Loading data. Please wait...'));
-                    },
-                    url: config.url,
-                }).success(function (response) {
-                    tinymce.get('cie-textarea').setContent(response.content);
-                    $('#cie-cms-id').val(response.id);
-                    $('#cie-cms-type').val(response.type);
-                    $('#cie-block-identifier span').html(response.identifier);
-                }).fail(function (response) {
-                    console.log('failed' + response);
-                });
+                const tinyMce = self.getTinyMce();
+
+                if ($(this).data('preview') === 0) {
+                    $.ajax({
+                        beforeSend: function () {
+                            $h2.html(self.loadingContent);
+                            tinyMce.setContent(self.loadingContent);
+                        },
+                        url: config.url,
+                    }).success(function (response) {
+                        tinyMce.setContent(response.content);
+                        $cmsId.val(response.id);
+                        $cmsType.val(response.type);
+                        $h2.html(response.identifier);
+                    }).fail(function (response) {
+                        console.log('failed' + response);
+                    });
+                } else {
+                    tinyMce.setContent($('#cie-preview').val());
+                    $cmsId.val($(this).data('cie-cms'));
+                    $cmsType.val($(this).data('cie-type'));
+                }
             });
         },
 
@@ -53,22 +70,25 @@ define([
          * @param cieModal
          */
         save: function (cieModal) {
-            var self = this;
+            const self = this;
+            const $elem = self.getCurrentCmsElem();
             const $cmsId = $('#cie-cms-id').val();
             const $cmsType = $('#cie-cms-type').val();
+            const tinyMce = self.getTinyMce();
 
             $.post({
                 url: self.postUrl,
                 data: {
-                    content: JSON.stringify(tinymce.get('cie-textarea').getContent()),
+                    content: JSON.stringify(tinyMce.getContent()),
                     id: $cmsId,
                     type: $cmsType
                 }
             }).success(function (response) {
-                $('#cie-cms-' + $cmsId).html(response['content']);
-                self.setResultModalContent('Success', 'Content has been saved.');
+                $elem.html(response['content']);
+                $elem.data('preview', 0);
+                self.setResultModalContent(self.successTitle, self.successContent);
             }).fail(function (response) {
-                self.setResultModalContent('Error', 'An error occurred while saving block. Please try again.');
+                self.setResultModalContent(self.errorTitle, self.errorContent);
             }).complete(function () {
                 if (self.resultModalInitialized === null) {
                     self.resultModalInitialized = modal(
@@ -88,9 +108,14 @@ define([
          * @param cieModal
          */
         preview: function (cieModal) {
-            const $cmsId = $('#cie-cms-id').val();
+            const self = this;
+            const $cmsElem = self.getCurrentCmsElem();
+            const tinyMce = self.getTinyMce();
 
-            $('#cie-cms-' + $cmsId).html(tinymce.get('cie-textarea').getContent());
+            self.resetPreview();
+            $cmsElem.html(tinyMce.getContent());
+            $('#cie-preview').val(tinyMce.getContent());
+            $cmsElem.data('preview', 1);
             cieModal.closeModal();
         },
 
@@ -106,7 +131,7 @@ define([
          * @param content
          */
         setResultModalContent: function (title, content) {
-            var self = this;
+            const self = this;
 
             self.resultModalOptions.title = $t(title);
             self.$resultModalElem.html($t(content));
@@ -115,7 +140,7 @@ define([
         /**
          */
         createEditorModal: function () {
-            var self = this;
+            const self = this;
 
             $('#cie-modal').modal({
                 type: 'slide',
@@ -128,13 +153,13 @@ define([
                     text: $t('Close'),
                     class: 'action-default reset'
                 },
-                // {
-                //     text: $t('Preview'),
-                //     class: 'action-secondary action-default',
-                //     click: function () {
-                //         self.preview(this);
-                //     }
-                // },
+                {
+                    text: $t('Preview'),
+                    class: 'action-secondary action-default',
+                    click: function () {
+                        self.preview(this);
+                    }
+                },
                 {
                     text: $t('Save'),
                     class: 'action-primary action-default',
@@ -143,6 +168,28 @@ define([
                     }
                 }]
             });
+        },
+
+        /**
+         * @returns {*|jQuery|HTMLElement}
+         */
+        getCurrentCmsElem: function () {
+            const $cmsId = $('#cie-cms-id').val();
+
+            return $('#cie-cms-' + $cmsId);
+        },
+
+        /**
+         */
+        resetPreview: function () {
+            $('.cie-box').data('preview', 0);
+        },
+
+        /**
+         * @returns {tinymce.Editor}
+         */
+        getTinyMce: function () {
+            return tinymce.get('cie-textarea');
         }
     });
 });

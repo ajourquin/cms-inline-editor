@@ -49,7 +49,7 @@ class Block
             if ($blockId !== null) {
                 $result = '<div id="cie-cms-' . $blockId . '" class="cie-box"
                     data-trigger="cie-trigger" data-cie-cms="' . $blockId . '"
-                    data-cie-type="block">'
+                    data-cie-type="block" data-preview="0">'
                     . $result
                     . '</div>';
             }

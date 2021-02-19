@@ -47,7 +47,7 @@ class Page
             if ($pageId > 0) {
                 $result = '<div id="cie-cms-' . $pageId . '" class="cie-box"
                     data-trigger="cie-trigger" data-cie-cms="' . $pageId . '"
-                    data-cie-type="page">'
+                    data-cie-type="page" data-preview="0">'
                     . $result
                     . '</div>';
             }
